@@ -3,6 +3,7 @@ package com.example.book_review_system.controller;
 import com.example.book_review_system.component.HeaderHelper;
 import com.example.book_review_system.constant.Message;
 import com.example.book_review_system.dto.request.CreateBookReqDTO;
+import com.example.book_review_system.dto.request.UpdateBookReqDTO;
 import com.example.book_review_system.dto.response.BookResDTO;
 import com.example.book_review_system.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,13 @@ public class BookController {
         return ResponseEntity.ok()
                 .headers(HeaderHelper.getHeadersMessage(Message.BOOK_CREATED))
                 .body(bookService.createBook(createBookReqDTO));
+    }
+    @PutMapping("/books/{bookId}")
+    public ResponseEntity<BookResDTO> updateBook(@PathVariable("bookId") Long bookId,
+                                                 @RequestBody UpdateBookReqDTO updateBookReqDTO){
+        return ResponseEntity.ok()
+                .headers(HeaderHelper.getHeadersMessage(Message.BOOK_MODIFIED))
+                .body(bookService.updateBook(bookId,updateBookReqDTO));
     }
     @DeleteMapping("/books/delete/{bookId}")
     public ResponseEntity<Void> deleteBook(@PathVariable("bookId") Long bookId){

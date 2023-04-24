@@ -2,6 +2,7 @@ package com.example.book_review_system.service;
 
 import com.example.book_review_system.constant.Message;
 import com.example.book_review_system.dto.request.CreateBookReqDTO;
+import com.example.book_review_system.dto.request.UpdateBookReqDTO;
 import com.example.book_review_system.dto.response.BookResDTO;
 import com.example.book_review_system.entity.Book;
 import com.example.book_review_system.repository.BookRepository;
@@ -44,6 +45,15 @@ public class BookService {
                 .build();
         return new BookResDTO(bookRepository.save(book));
 
+    }
+    public BookResDTO updateBook(Long bookId, UpdateBookReqDTO api){
+        Book book = bookRepository.getOne(bookId);
+        checkIfBookExists(api.getTitle());
+        book.setAuthor(api.getAuthor());
+        book.setTitle(api.getTitle());
+        book.setIsActive(api.getIsActive());
+
+        return new BookResDTO(bookRepository.save(book));
     }
 
     public void deleteBook(Long bookId){
