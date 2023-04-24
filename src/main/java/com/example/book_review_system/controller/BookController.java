@@ -1,18 +1,20 @@
 package com.example.book_review_system.controller;
 
-import com.example.book_review_system.dto.BookResDTO;
+import com.example.book_review_system.component.HeaderHelper;
+import com.example.book_review_system.constant.Message;
+import com.example.book_review_system.dto.request.CreateBookReqDTO;
+import com.example.book_review_system.dto.response.BookResDTO;
 import com.example.book_review_system.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class BookController {
     private final BookService bookService;
 
+    @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
@@ -23,5 +25,18 @@ public class BookController {
     @GetMapping("/books/{bookId}")
     public ResponseEntity<BookResDTO> getBook(@PathVariable("bookId") Long bookId){
         return ResponseEntity.ok(bookService.getBook(bookId));
+    }
+    @PostMapping("/books")
+    public ResponseEntity<BookResDTO> createBook(@RequestBody CreateBookReqDTO createBookReqDTO){
+        return ResponseEntity.ok()
+                .headers(HeaderHelper.getHeadersMessage(Message.BOOK_CREATED))
+                .body(bookService.createBook(createBookReqDTO));
+    }
+    @DeleteMapping("/books/delete/{bookId}")
+    public ResponseEntity<Void> deleteBook(@PathVariable("bookId") Long bookId){
+        bookService.deleteBook(bookId);
+        return ResponseEntity.ok()
+                .headers(HeaderHelper.getHeadersMessage(Message.BOOK_DELETED))
+                .build();
     }
 }

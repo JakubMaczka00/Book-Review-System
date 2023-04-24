@@ -1,8 +1,11 @@
 package com.example.book_review_system.service;
 
-import com.example.book_review_system.dto.BookResDTO;
+import com.example.book_review_system.constant.Message;
+import com.example.book_review_system.dto.request.CreateBookReqDTO;
+import com.example.book_review_system.dto.response.BookResDTO;
 import com.example.book_review_system.entity.Book;
 import com.example.book_review_system.repository.BookRepository;
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +34,27 @@ public class BookService {
                 .title(book.getTitle())
                 .isActive(book.getIsActive())
                 .build();
+    }
+    public BookResDTO createBook(CreateBookReqDTO api){
+        checkIfBookExists(api.getTitle());
+        Book book = Book.builder()
+                .author(api.getAuthor())
+                .title(api.getTitle())
+                .isActive(Boolean.TRUE)
+                .build();
+        return new BookResDTO(bookRepository.save(book));
+
+    }
+
+    public void deleteBook(Long bookId){
+        Book book = bookRepository.getOne(bookId);
+        Preconditions.checkArgument(book.getIsActive(), Message.BOOK_CANNOT_BE_DELETED);
+        book.setIsActive(false);
+        bookRepository.save(book);
+    }
+
+    private void checkIfBookExists(String title){
+        boolean isExist = bookRepository.existByTitle(title);
+        Preconditions.checkArgument(!isExist, Message.BOOK_EXISTS);
     }
 }
