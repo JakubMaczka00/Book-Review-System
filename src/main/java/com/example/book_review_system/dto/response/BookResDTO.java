@@ -1,4 +1,4 @@
-package com.example.book_review_system.dto;
+package com.example.book_review_system.dto.response;
 
 import com.example.book_review_system.entity.Book;
 import lombok.*;
