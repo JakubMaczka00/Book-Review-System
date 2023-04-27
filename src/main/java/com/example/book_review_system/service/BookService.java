@@ -21,6 +21,7 @@ public class BookService {
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+
     public List<BookResDTO> getAllBooks(){
         return bookRepository.getAllBooks()
                                         .stream()
