@@ -2,11 +2,13 @@ package com.example.book_review_system.service;
 
 import com.example.book_review_system.component.Role;
 import com.example.book_review_system.config.jwt.JwtService;
+import com.example.book_review_system.constant.Message;
 import com.example.book_review_system.dto.request.LoginReqDTO;
 import com.example.book_review_system.dto.request.RegisterReqDTO;
 import com.example.book_review_system.dto.response.AuthResDTO;
 import com.example.book_review_system.entity.User;
 import com.example.book_review_system.repository.UserRepository;
+import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +24,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResDTO register(RegisterReqDTO registerReqDTO){
+        checkIfUserExists(registerReqDTO.getEmail());
         User user = User.builder()
                 .firstname(registerReqDTO.getFirstname())
                 .lastname(registerReqDTO.getLastname())
@@ -50,5 +53,10 @@ public class AuthService {
                 .token(jwtToken)
                 .build();
 
+    }
+
+    private void checkIfUserExists(String email){
+        boolean isExist = userRepository.existByEmail(email);
+        Preconditions.checkArgument(!isExist, Message.USER_EXISTS);
     }
 }

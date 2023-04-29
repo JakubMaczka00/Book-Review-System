@@ -7,4 +7,6 @@ public class Message {
     public static final String BOOK_CANNOT_BE_DELETED = "FEEDBACK.BOOK_CANNOT_BE_DELETED";
     public static final String BOOK_DELETED = "FEEDBACK.BOOK_DELETED";
     public static final String BOOK_MODIFIED = "FEEDBACK.BOOK_MODIFIED";
+    //USER
+    public static final String USER_EXISTS = "FEEDBACK.USER_EXISTS";
 }
