@@ -49,11 +49,16 @@ public class BookService {
     }
     public BookResDTO updateBook(Long bookId, UpdateBookReqDTO api){
         Book book = bookRepository.getOne(bookId);
-        checkIfBookExists(api.getTitle());
-        book.setAuthor(api.getAuthor());
-        book.setTitle(api.getTitle());
-        book.setIsActive(api.getIsActive());
-
+        if(book.getTitle().equals(api.getTitle())) {
+            book.setAuthor(api.getAuthor());
+            book.setIsActive(api.getIsActive());
+        }
+        else{
+            checkIfBookExists(api.getTitle());
+            book.setAuthor(api.getAuthor());
+            book.setTitle(api.getTitle());
+            book.setIsActive(api.getIsActive());
+        }
         return new BookResDTO(bookRepository.save(book));
     }
 
