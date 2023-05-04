@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Data
@@ -20,4 +22,6 @@ public class Book {
     private String title;
     private String author;
     private Boolean isActive;
+    @OneToMany(mappedBy = "book")
+    private List<Review> reviews;
 }
