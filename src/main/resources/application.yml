@@ -6,4 +6,9 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
+    # properties:
+    #   hibernate:
+    #     show_sql: true
+    #     format_sql: true
+    #     hbm2ddl:
+    #       auto: create

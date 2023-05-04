@@ -19,4 +19,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "WHERE b.title = :title AND b.isActive = TRUE ")
     boolean existByTitle(@Param("title") String title);
 
+    @Query("SELECT b " +
+    "FROM Book b " +
+    "WHERE  b.isActive = TRUE AND b.id  = :bookId")
+    Book getBookById(@Param("bookId") Long bookId);
+
 }
