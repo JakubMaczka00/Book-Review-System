@@ -10,6 +10,7 @@ public class Message {
     public static final String BOOK_DOES_NOT_EXIST = "FEEDBACK.BOOK_DOES_NOT_EXIST";
     //USER
     public static final String USER_EXISTS = "FEEDBACK.USER_EXISTS";
+    public static final String PASSWORD_DOES_NOT_MEET_REQUIREMENTS = "FEEDBACK.PASSWORD_DOES_NOT_MEET_REQUIREMENTS";
     //REVIEW
     public static final String REVIEW_EXISTS = "FEEDBACK.USER_REVIEWED_BOOK";
     public static final String REVIEW_CREATED = "FEEDBACK.REVIEW_CREATED";

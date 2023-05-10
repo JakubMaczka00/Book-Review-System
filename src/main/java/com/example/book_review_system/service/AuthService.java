@@ -25,6 +25,7 @@ public class AuthService {
 
     public AuthResDTO register(RegisterReqDTO registerReqDTO){
         checkIfUserExists(registerReqDTO.getEmail());
+        isPasswordValid(registerReqDTO.getPassword());
         User user = User.builder()
                 .firstname(registerReqDTO.getFirstname())
                 .lastname(registerReqDTO.getLastname())
@@ -58,5 +59,11 @@ public class AuthService {
     private void checkIfUserExists(String email){
         boolean isExist = userRepository.existByEmail(email);
         Preconditions.checkArgument(!isExist, Message.USER_EXISTS);
+    }
+
+    public void isPasswordValid(String password) {
+        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        boolean passwordMatches = password.matches(passwordPattern);
+        Preconditions.checkArgument(passwordMatches, Message.PASSWORD_DOES_NOT_MEET_REQUIREMENTS);
     }
 }
